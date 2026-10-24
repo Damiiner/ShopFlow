@@ -1,0 +1,121 @@
+{
+  "info": {
+    "name": "ShopFlow API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base", "value": "http://localhost:8080" },
+    { "key": "access", "value": "" },
+    { "key": "refresh", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@shopflow.com\",\n  \"password\": \"Customer123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"new@example.com\",\n  \"password\": \"Abcd1234\",\n  \"firstName\": \"A\",\n  \"lastName\": \"B\",\n  \"role\": \"CUSTOMER\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base}}/api/auth/refresh",
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refresh}}\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List products",
+          "request": { "method": "GET", "url": "{{base}}/api/products?page=0&size=12" }
+        },
+        {
+          "name": "Search",
+          "request": { "method": "GET", "url": "{{base}}/api/products/search?q=head&page=0&size=12" }
+        },
+        {
+          "name": "Detail",
+          "request": { "method": "GET", "url": "{{base}}/api/products/1" }
+        }
+      ]
+    },
+    {
+      "name": "Cart (Bearer)",
+      "item": [
+        {
+          "name": "Get cart",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access}}" }],
+            "url": "{{base}}/api/cart"
+          }
+        },
+        {
+          "name": "Add item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base}}/api/cart/items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"variantId\": null,\n  \"quantity\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Place order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base}}/api/orders",
+            "body": { "mode": "raw", "raw": "{\n  \"addressId\": 1\n}" }
+          }
+        },
+        {
+          "name": "My orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access}}" }],
+            "url": "{{base}}/api/orders/my"
+          }
+        }
+      ]
+    }
+  ]
+}

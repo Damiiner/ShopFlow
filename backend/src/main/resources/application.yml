@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: shopflow
+  datasource:
+    url: jdbc:h2:mem:shopflow;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+shopflow:
+  jwt:
+    secret: ${JWT_SECRET:shopflow-dev-secret-key-must-be-256-bits-long-for-hs256!!}
+    access-expiration-ms: 900000
+    refresh-expiration-ms: 604800000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+logging:
+  level:
+    com.shopflow: INFO
